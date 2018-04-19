@@ -1,5 +1,4 @@
 
-
 ### 数据类型
 数据类型 | 意义
 ---|---
@@ -169,8 +168,11 @@ pd.date_range('2017-01-01 00:00', periods=5, freq='D') | 创建一个时间序�
 df.tz_localize('UTC') |  国际时间表示
 df.ts_convert('US/Eastern') |  时区转换
 
+### index 标签操作
 
+method of pandas.core.indexes.base.Index instance
 
-
-
+函数 | 意义
+---| ---
+df.columns.difference | 计算两个df 的index或者 column 的差集, 接受df or index or list-like
 
