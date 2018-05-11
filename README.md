@@ -96,11 +96,12 @@ df.argmax | 获取最大值得索引位置
 df.quantile | 计算样本的分位数（0到 1）
 df.mad | 根据平均值计算平均绝对离差
 df.var | 样本值的方差 
+df.cov(otherDF, min_periods=None) | 协方差
 df.std( ddof=1) | 返回某个轴的标准差
 df.skew | 样本值的偏度（三阶矩）
 df.kurt | 样本值的峰度（四阶矩）
 diff | 计算一阶差分（对时间序列很有用) 
-pct_change | 计算百分数变化
+df.pct_change | 计算增长率
 
 
 ### 应用 function
