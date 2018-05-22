@@ -26,11 +26,10 @@ df.colums |  查看 colums
 df.values | 查看数值
 df.describe() |  查看数据快速统计结果
 df.T |  数据转置
-df.sort_index(axis=1, ascending=Fasle) |  按照轴排序, 正序倒序, 不接受列表自定义排序
-df.sort_values(by='B') | 按值排序
-df.reindex(index=, columns=, *kw) | 重新对轴进行排序, 接受列表自定义排序
+
 
 ### 选择数据
+* 切片并不需要 index 或者 column 在实际意义上有真正的顺序
 
 方法 | 意义
 ---|---
@@ -61,14 +60,22 @@ df.iloc[0].item() | 获取单个数据
 
 方法 | 意义
 ---|---
-df['F']= aSeries |  新增一列数据
+df['F']= aSeries |  新增一列数据, 默认需要index对应, 不对应设置为Null
 df.at['index1','colum1'] = 0 |  标签索引更新单个值
 df.iat['num1', 'num2'] = 0 | 根据位置更新单个值
 df.loc[: 'D'] = np.array[[5] *len(df)] |  更新一列值
 df[df>0] = -df |  通过 where 更新, 大于0全变成负的
+df.append(other) | 添加多行, 如果包含不存在的columns, 则增加
 df.round | 对数据保留固定有效位数
 df.str.lower() |  所有转变为小写
 
+### 排序
+
+方法 | 意义
+---|---
+df.sort_index(axis=1, ascending=Fasle) |  按照轴排序, 正序倒序, 不接受列表自定义排序
+df.sort_values(by='B') | 按值排序, 不接受自定义排序. ascending=False 降序, axis指定轴
+df.reindex(index=, columns=, *kw) | 重新对轴进行排序, 接受列表自定义排序, 相对传入index缺失的填充NaN, 多余的会被删除.
 
 
 ### 缺失数据更新
@@ -79,6 +86,7 @@ df.reindex(index=, columns=) |  修改,增加,删除索引列
 df.dropna(how='any') |  丢弃缺失行, any=缺少就删除, all=全部缺少才删除
 df.fillna(value=5) |  对缺失值进行赋值
 pd.isnull(df) |  查看是否是缺失, 把值都变成 True,False
+
 
 ### 描述和汇总统计
 
@@ -102,6 +110,7 @@ df.skew | 样本值的偏度（三阶矩）
 df.kurt | 样本值的峰度（四阶矩）
 diff | 计算一阶差分（对时间序列很有用) 
 df.pct_change | 计算增长率
+df.shift | 数据错位, 正数向下错位, 负数向上. 错出空位直接填充NaN,  freq可以指定错位多长时间或者时间规则
 
 
 ### 应用 function
@@ -111,7 +120,7 @@ df.pct_change | 计算增长率
 df.apply(np.cumsum) |  累加
 df.apply(lambda x: x.max() - x.min()) | 每列的 最大-最小
 
-### 计算
+### 运算
 方法 | 意义
 --- | ---
 df123.divide(dfD, axis=0) | 按行运算, 所有的df123与dfD 对应行进行运算
@@ -124,8 +133,8 @@ pd.concat([df[:3],df[3:6]]) | 连接
 pd.merge(left, right, on='key') | 合并, 对 key(column)  相同的进行排列组合, 一一匹配
 df.append(df.iloc[3], ignore_index=True) | 追加
 
-### 分组
 
+### 分组
 
 方法 | 意义
 ---|---
@@ -194,6 +203,12 @@ method of pandas.core.indexes.base.Index instance
 函数 | 意义
 ---| ---
 indexobj.difference | 计算两个df 的index或者 column 的差集, 接受df or index or list-like
+indexobj.get_loc | 将label 转换为 location number
+
+### 导出操作
+函数|意义
+---|---
+.to_dict | 导出为字典, {column1: {index1: data1, index2:data2...}...}
 
 
 ### 遇到的一些问题
@@ -205,4 +220,9 @@ ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.i
 The or and and python statements require truth-values. For pandas these are considered ambiguous so you should use "bitwise" | (or) or & (and) operations:
 # 必须使用 & 符号， 或者用np.logic_and(x, y)
 ############################################
+```
+* 切片并不需要 index 或者 column 在实际意义上有真正的顺序
+```python
+df123.columns => ['D', 'B', 'C', 'A']
+df123.loc[:, 'D':'B'] --> columns['D', 'B']
 ```
