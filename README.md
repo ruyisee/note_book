@@ -198,12 +198,12 @@ df.ts_convert('US/Eastern') |  时区转换
 
 ### index 标签操作
 
-method of pandas.core.indexes.base.Index instance
-
 函数 | 意义
 ---| ---
 indexobj.difference | 计算两个df 的index或者 column 的差集, 接受df or index or list-like
 indexobj.get_loc | 将label 转换为 location number
+df.resample | 按一定时间规则重新取样
+df.set_index(keys=) | 将某一列转化为INDEX, 同时此列在数据域将被删除, 默认返回新的df, 
 
 ### 导出操作
 函数|意义
