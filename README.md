@@ -120,7 +120,7 @@ df.divide(dfD, axis=0) | 按行运算, 所有的df123与dfD 对应行进行运�
 方法 | 意义
 ---|---
 pd.concat([df[:3],df[3:6]]) | 连接
-pd.merge(left, right, on='key') | 合并, 对 key(column)  相同的进行排列组合, 一一匹配
+DataFrame.merge(right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'), copy=True, indicator=False, validate=None) | 合并, how=>{'inner', 'left', 'right', 'outer'}与数据库表连接概念相同; on=lable or list, 设置在某一列**值**相等时进行连接; left_on&right_on=>label or list, or array-like, 设置左右哪些列相等的时候, 进行连接; left_index&right_index=>bool, 当只设置一个为True, 则是选择显示的index, 当左右都是True, 则是规定按照左右index进行连接; suffixes=list-like-str, 设置合并后的columns后缀, 用于显示归属左右哪方数据; copy=>bool 默认True, 是否拷贝数据; indicator=>bool or str, 设置一列_merge信息列, 用于记录每一行数据来源{left_only, right_only, both}, str则是替换_merge的自定义名称; sort=>bool
 df.append(df.iloc[3], ignore_index=True) | 追加
 
 
