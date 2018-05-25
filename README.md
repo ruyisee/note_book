@@ -156,7 +156,7 @@ indexobj.get_level_values(i) | 获得某个符合索引的 某level 的index �
 pd.MultiIndex.from_tuples(tuples, names=['one', 'two']) | 创建复合索引
 df.resample | 按一定时间规则重新取样
 df.set_index(self, keys, drop=True, append=False, inplace=False, verify_integrity=False | 将某一列(或者多列-list形成符合索引)转化为INDEX, 同时此列在数据域将被删除, 默认返回新的df. exp: keys=['datatime', 'code'],生成二级索引. drop是否丢弃数据域原index数据. append是否保留原来的index(新设置的index作为二级, 三级index添加在后面)
-df.reset_index(level=[0,], drop=False, inplace=False, col_level=0, col_fill='') | 还原索引，从新变为默认的整型索引. level设置还原级别, 默认全部还原. drop设置被删除的索引是否转化为普通列.## contact后容易出现索引重复, 需要用此方法处理.
+df.reset_index(level=[0,], drop=False, inplace=False, col_level=0, col_fill='') | .set_index 的反操作. 还原索引为数据. level设置还原级别, 默认全部还原. drop设置是否删除的被转化的索引.
 df.sort_index(axis=1, ascending=Fasle) |  按照轴排序, 正序倒序, 不接受列表自定义排序
 df.sort_values(by='B') | 按值排序, 不接受自定义排序. ascending=False 降序, axis指定轴
 df.reindex(index=, columns=, *kw) | 重新对轴进行排序, 接受列表自定义排序, 相对传入index缺失的填充NaN, 多余的会被删除.
