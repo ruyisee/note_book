@@ -3,8 +3,8 @@
 数据类型 | 意义
 ---|---
 Series |  一维数组, 类型相同
-DataFrame | 二维表格数据类型, 理解为Series的容器
-Panel | 三维数组, 理解为 DataFrame 的容器
+DataFrame | 二维表格数据类型, 理解为Series的容器 ==df
+Panel  | 三维数组, 理解为 DataFrame 的容器==pl, 未来此数据类型将被放弃, 推荐使用MultiIndex-DataFrame (复合索引)
 
 ### 创建对象
 
@@ -12,8 +12,9 @@ Panel | 三维数组, 理解为 DataFrame 的容器
 ---|---
 pd.Series([1,3,4,np.nan,6,8], index=) |  用列表创建 Series
 pd.date_range('20130101', periods=6) | 创建 DatetimeIndex  对象
-pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD')) |  创建 DataFrame  对象
+df = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD')) |  创建 DataFrame  对象
 pd.DataFrame({column1: data1,...} ) | 通过字典创建
+pl 
 
 ### 查看对象
 
@@ -43,15 +44,17 @@ df.loc['20170101', 'A'] |  获取单个值
 df.at['20170101', 'A'] |  获取单个标量(同上)
 **---位置索引选择---** | **---[半闭半开区间,右侧边界不包括)---**
 df[0:3] | 对行进行切片
+df.iloc | 支持 单个位置索引, 列表, 切片. 不同轴的操作用","隔开
 df.iloc[3] | 位置选择, 支持负数
 df.iloc[3:5, 0:2] |  通过数值切片 **[左闭包括, 右开不包括)**
 df.iloc[[1,2,4],[0,2]] |  通过指定位置列表
 df.iloc[1:3,:] |  行切片, 后面的冒号可以省略
 df.iloc[:, 1:3] |  列切片
 df.iloc[1,1] |  获取特定值
+df.iloc[bool_list] | 可以用 bool 组成的列表进行过滤
 df.iat[1,1] | 访问某个标量(同上)
 ---- | ----
-df[df.A > 0] |  通过某列选择数据
+df[df.A > 0] |  通过某列选择数据,其实就是用了bool_list过滤
 df[df > 0] | 过滤每一元素, 不满足的重置为 NaN
 df[df['E'].isin(['two', 'four'])] | 通过已知列表过滤
 df.iloc[0].item() | 获取单个数据
@@ -149,6 +152,7 @@ df.ts_convert('US/Eastern') |  时区转换
 ---| ---
 indexobj.difference | 计算两个df 的index或者 column 的差集, 接受df or index or list-like
 indexobj.get_loc | 将label 转换为 location number
+indexobj.get_level_values(i) | 获得某个符合索引的 某level 的index 对象
 pd.MultiIndex.from_tuples(tuples, names=['one', 'two']) | 创建复合索引
 df.resample | 按一定时间规则重新取样
 df.set_index(self, keys, drop=True, append=False, inplace=False, verify_integrity=False | 将某一列(或者多列-list形成符合索引)转化为INDEX, 同时此列在数据域将被删除, 默认返回新的df. exp: keys=['datatime', 'code'],生成二级索引. drop是否丢弃数据域原index数据. append是否保留原来的index(新设置的index作为二级, 三级index添加在后面)
@@ -157,6 +161,9 @@ df.sort_index(axis=1, ascending=Fasle) |  按照轴排序, 正序倒序, 不接�
 df.sort_values(by='B') | 按值排序, 不接受自定义排序. ascending=False 降序, axis指定轴
 df.reindex(index=, columns=, *kw) | 重新对轴进行排序, 接受列表自定义排序, 相对传入index缺失的填充NaN, 多余的会被删除.
 df.rename(index=None, columns=None, **kwargs) | 给标签重新命名,可以接受字典用于映射, 或函数, 接受旧name, 返回新name
+---|---
+multiIndex_df.to_panel() | 默认column(第二轴)=>变为第一轴, index(level_0) 变为第二轴, index(level_1)变为第三轴
+.transpose(list-like) | 调整轴的顺序, [2, 0, 1]表示原来第三轴变为第一轴...
 
 ### 导出操作
 函数|意义
