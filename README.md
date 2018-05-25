@@ -10,10 +10,10 @@ Panel | 三维数组, 理解为 DataFrame 的容器
 
 方法 | 意义
 ---|---
-pd.Series([1,3,4,np.nan,6,8]) |  用列表创建 Series
+pd.Series([1,3,4,np.nan,6,8], index=) |  用列表创建 Series
 pd.date_range('20130101', periods=6) | 创建 DatetimeIndex  对象
 pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD')) |  创建 DataFrame  对象
-pd.Series({column1: data1,...} ) | 通过字典创建
+pd.DataFrame({column1: data1,...} ) | 通过字典创建
 
 ### 查看对象
 
