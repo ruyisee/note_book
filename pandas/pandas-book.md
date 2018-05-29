@@ -102,7 +102,7 @@ df.cov(otherDF, min_periods=None) | 协方差
 df.std( ddof=1) | 返回某个轴的标准差
 df.skew | 样本值的偏度（三阶矩）
 df.kurt | 样本值的峰度（四阶矩）
-diff | 计算一阶差分（对时间序列很有用) 
+diff() | 计算一阶差分（对时间序列很有用) , 比如计算相隔9个数据的差==> shift 然后相减操作
 df.pct_change | 计算增长率
 df.shift | 数据错位, 正数向下错位, 负数向上. 错出空位直接填充NaN,  freq可以指定错位多长时间或者时间规则
 df.apply(np.cumsum) |  累加
