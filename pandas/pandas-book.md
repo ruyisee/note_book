@@ -14,7 +14,7 @@ pd.Series([1,3,4,np.nan,6,8], index=) |  用列表创建 Series
 pd.date_range('20130101', periods=6) | 创建 DatetimeIndex  对象
 df = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD')) |  创建 DataFrame  对象
 pd.DataFrame({column1: data1,...} ) | 通过字典创建
-pl 
+pd.date_range(start=None, end=None, periods=None, freq='D', tz=None, normalize=False, name=None, closed=None, **kwargs) | 创建时间序列Series, freq可以指定间隔是年月日时分秒.
 
 ### 查看对象
 
@@ -35,7 +35,8 @@ df.T |  数据转置
 方法 | 意义
 ---|---
 **---标签选择---** | **---[左右都包括]---**
-df['A'] | ==df.A , 获取 A 列
+df['A'] | ==df.A , 获取 A 列 返回的是Series类型
+df[['A', 'B']] | 取出多列数据, 返回的是 DataFrame 类型
 df.loc['index1'] | 使用标签索引
 df.loc[:, ['A','B']] | 切片
 df.loc['20170101':'20170202', ['A', 'B']] |  切片
@@ -73,7 +74,7 @@ df.append(other) | 添加多行, 如果包含不存在的columns, 则增加
 df.round | 对数据保留固定有效位数
 df.str.lower() |  所有转变为小写
 
-### 缺失数据更新
+### 数据整理--缺失数据更新\重新取样等
 
 方法 | 意义
 ---|---
@@ -81,12 +82,19 @@ df.reindex(index=, columns=) |  修改,增加,删除索引列
 df.dropna(how='any') |  丢弃缺失行, any=缺少就删除, all=全部缺少才删除
 df.fillna(value=5) |  对缺失值进行赋值
 pd.isnull(df) |  查看是否是缺失, 把值都变成 True,False
+df.drop_duplicates(subset=None, keep='first', inplace=False) | 删除重复, subset设置审查哪些columns重复, 默认全部, inplace原地修改.
+df.resample | 按一定时间规则重新取样
+df.sample(n=None, frac=None, replace=False, weights=None, random_state=None, axis=None) | 对样本进行随机取样, n设定要返回的数据量, frac设置返回的比例, 不能与n同时使用. weights设置数据取样权重. random_state随机因子, axis设置要随机取样的轴.
+df.nsmallest(n, 'value') | 取出某个值最小的n条数据
+df.nlargest(n, 'value') | 取出某个值最大的n条数据
+df.filter(items=None, like=None, regex=None, axis=None) | 对轴name用一定规则过滤
 
 
 ### 描述和汇总统计
 
 方法 | 意义
 ---|---
+df.sum(axis=None, skipna=None, level=None, numeric_only=None, min_count=0, **kwargs)| 求和, axis=1设置横向求和,   *
 df.mean() |  按列求平均值
 df.mean(1) |  按行求平均
 df.sub(s, axis='index') | df 减法, NaN 与任何运算都是 NaN
@@ -124,6 +132,7 @@ DataFrame.merge(right, how='inner', on=None, left_on=None, right_on=None, left_i
 df.append(df.iloc[3], ignore_index=True) | 追加
 
 
+
 ### 分组
 
 方法 | 意义
@@ -154,7 +163,6 @@ indexobj.difference | 计算两个df 的index或者 column 的差集, 接受df o
 indexobj.get_loc | 将label 转换为 location number
 indexobj.get_level_values(i) | 获得某个符合索引的 某level 的index 对象
 pd.MultiIndex.from_tuples(tuples, names=['one', 'two']) | 创建复合索引
-df.resample | 按一定时间规则重新取样
 df.set_index(self, keys, drop=True, append=False, inplace=False, verify_integrity=False | 将某一列(或者多列-list形成符合索引)转化为INDEX, 同时此列在数据域将被删除, 默认返回新的df. exp: keys=['datatime', 'code'],生成二级索引. drop是否丢弃数据域原index数据. append是否保留原来的index(新设置的index作为二级, 三级index添加在后面)
 df.reset_index(level=[0,], drop=False, inplace=False, col_level=0, col_fill='') | .set_index 的反操作. 还原索引为数据. level设置还原级别, 默认全部还原. drop设置是否删除的被转化的索引.
 df.sort_index(axis=1, ascending=Fasle) |  按照轴排序, 正序倒序, 不接受列表自定义排序
