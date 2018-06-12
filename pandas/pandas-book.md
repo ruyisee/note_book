@@ -47,18 +47,18 @@ remove_unused_levels()|	create a new MultiIndex from the current that removing u
 attribute | explain
 ---|---
 T | Transpose index and columns. 返回矩阵的转置
-at | Access a single value for a row/column label pair.
-axes |	Return a list representing the axes of the DataFrame.
+at | Access a single value for a row/column label pair.通过label定位一个元素, 可以赋值
+axes |	Return a list representing the axes of the DataFrame.返回轴对象组成的列表
 blocks|	(DEPRECATED) Internal property, property synonym for as_blocks()
-columns|	The column labels of the DataFrame.
-dtypes|	Return the dtypes in the DataFrame.
-empty|	Indicator whether DataFrame is empty.
+columns|	The column labels of the DataFrame. 返回列的Index对象
+index|	The index (row labels) of the DataFrame.返回行的index对象
+dtypes|	Return the dtypes in the DataFrame. 返回DataFrame每一列的类型, Series对象
+empty|	Indicator whether DataFrame is empty. 是否为空
 ftypes|	Return the ftypes (indication of sparse/dense and dtype) in DataFrame.
-iat|	Access a single value for a row/column pair by integer position.
-iloc|	Purely integer-location based indexing for selection by position.
-index|	The index (row labels) of the DataFrame.
-ix|	A primarily label-location based indexer, with integer position fallback.
-loc|	Access a group of rows and columns by label(s) or a boolean array.
+iat[]|	Access a single value for a row/column pair by integer position. 通过位置索引定位一个元素.可以赋值
+iloc[]|	Purely integer-location based indexing for selection by position. 通过位置索引定位或者切片, 可以赋值
+ix|	A primarily label-location based indexer, [错误]with integer position fallback. 和loc一样, 接受label返回数据
+loc|	Access a group of rows and columns by label(s) or a boolean array.通过标签或者布尔序列取值, 可以进行赋值
 ndim|	Return an int representing the number of axes / array dimensions.
 shape|	Return a tuple representing the dimensionality of the DataFrame.
 size|	Return an int representing the number of elements in this object.
